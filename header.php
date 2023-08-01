@@ -13,7 +13,36 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
+    <script type="text/javascript">
+    var colorObjects='<?php print get_theme_mod('object_color'); ?>';
+    if(! colorObjects )
+    	colorObjects="random"; //"random" or css color, like "red", "rgb(22,22,22)" or "#22ee22"
+    
+    var colorSecondObjects='<?php print get_theme_mod('object_secondcolor'); ?>';
 
+    var amountObjects='<?php print get_theme_mod('amountObjects'); ?>';
+    if(! amountObjects )
+    	amountObjects=0.5; 
+
+    var lightenObjects='<?php print get_theme_mod('lightenObjects'); ?>';
+    if(! lightenObjects )
+    	lightenObjects=0.5; 
+
+    var lightenContent='<?php print get_theme_mod('lightenContent'); ?>';
+    if(! lightenContent )
+    	lightenContent=0.7; 
+
+    var backgroundColor='<?php print get_theme_mod('background_color'); ?>';
+    if(! backgroundColor )
+    	backgroundColor='#ffffff'; 
+
+    var svgContent="M0 0 L 40 40 L 80 0 Z"; 
+    var layout = '<?php echo get_theme_mod( 'canvaslayout_field' )?>'; 
+	if(layout.startsWith('svg')){
+    	svgContent='<?php print get_theme_mod('svgContent'); ?>';
+    }
+    var context, bodyElement, bodyStyle, canvas, contentElement;
+    </script>
 	<?php wp_head(); ?>
 </head>
 

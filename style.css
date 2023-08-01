@@ -1,9 +1,9 @@
 /*!
-Theme Name: Susty
-Theme URI: https://sustywp.com
-Author: Jack Lenox
+Theme Name: Susty Canvas
+Theme URI: https://github.com/tmanych/susty-canvas
+Author: Jack Lenox and extended by Tatjana Manych
 Author URI: https://blog.jacklenox.com
-Description: A theme for WordPress focused on performance and sustainability.
+Description: A theme for WordPress focused on performance and sustainability. It was extended by various javascripts to generate lightweight graphics in the background.
 Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
@@ -899,7 +899,7 @@ svg * {
 }
 
 article a, nav a {
-	background: rgb(252, 248, 243) none repeat scroll 0% 0%;
+	/*background: rgb(252, 248, 243) none repeat scroll 0% 0%;*/
 	border-bottom: 0.1em dotted;
 	line-height: 1.6em;
 }
@@ -909,14 +909,14 @@ article > header > h1, article > header > h2 {
 	line-height: 1em;
 	margin: 0 0 .4em 0;
 }
-
+/*
 .entry-meta {
 	color: rgb(179, 179, 179);
 }
 
 .entry-meta a {
 	color: rgb(179, 179, 179);
-}
+}*/
 
 .cat-links {
 	display: flex;

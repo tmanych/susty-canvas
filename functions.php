@@ -6,9 +6,40 @@
  *
  * @package Susty
  */
-
+$canvas_layouts = array(
+    'flowers1' => "Flowers 1",
+    'flowers2' => "Flowers 2",
+    'flowers3' => "Flowers 3",
+    'flowers4' => "Flowers 4",
+    'flowers5' => "Flowers 5",
+    'flowers6' => "Flowers 6",
+    'radiate' => "Radiate",
+    'lines' => "Lines  (from big to small)",
+    'rectangles' => "Chess",
+    'rectangles1' => "Rectangles (from big to small)",
+    'rectangles2' => "Wide Lines",
+    'rectangles3' => "Rectangles big",
+    'arcs1' => "Arcs 1 (from big to small)",
+    'arcs2' => "Arcs 2 (colored left bottom)",
+    'arcs3' => "Arcs 3 (lines left bottom)",
+    'arcs4' => "Arcs 4 (random lines)",
+    'art1' => "Art 1",
+    'art2' => "Art 2",
+    'art3' => "Art 3",
+    'triangle1' => "Triangle 1 (random)",
+    'triangle2' => "Triangle 2",
+    'arcanimation' => 'Arc-Animation',
+    'titleanimation' => 'Title-Animation',
+    'title1' => 'Title 1',
+    'title2' => 'Title 2',
+    'title3' => 'Title 3',
+    'title4' => 'Title 4',
+    'svg1' => 'SVG pattern (for experts)',
+    'svg2' => 'SVG random (for experts)',
+);
+ksort($canvas_layouts,2);
 if ( ! function_exists( 'susty_setup' ) ) :
-	/**
+    /**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
 	 * Note that this function is hooked into the after_setup_theme hook, which
@@ -58,13 +89,7 @@ if ( ! function_exists( 'susty_setup' ) ) :
 			'gallery',
 			'caption',
 		) );
-
-		// Set up the WordPress core custom background feature.
-		add_theme_support( 'custom-background', apply_filters( 'susty_custom_background_args', array(
-			'default-color' => 'fffefc',
-			'default-image' => '',
-		) ) );
-
+		
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
 
@@ -79,9 +104,130 @@ if ( ! function_exists( 'susty_setup' ) ) :
 			'flex-width'  => true,
 			'flex-height' => true,
 		) );
+		global $canvas_layouts;
+		$canvas_layout = get_theme_mod( 'canvaslayout_field' );
+		if( in_array($canvas_layout, array_keys($canvas_layouts) ) ) {
+            wp_enqueue_script( 'my-script-'.$canvas_layout, get_template_directory_uri() . '/canvas_layouts/'.$canvas_layout.'.js', array(), true );
+		}
+		wp_enqueue_script( 'my-script', get_template_directory_uri() . '/canvas_layouts/script.js', array(), true );
 	}
 endif;
 add_action( 'after_setup_theme', 'susty_setup' );
+
+add_action( 'customize_register', 'mytheme_customize_register' );
+function mytheme_customize_register( $wp_customize ) {
+    global $canvas_layouts;
+    // Add a setting to save the selected value
+    $wp_customize->add_setting( 'canvaslayout_field', array(
+        'default'   => 'arcs1',
+        'transport' => 'refresh',
+    ) );
+    
+    // Add a control to display the select field
+    $wp_customize->add_control( 'canvaslayout_field', array(
+        'type'    => 'select',
+        'label'   => 'Select Layout',
+        'section' => 'title_tagline', // You can change this section as per your preference
+        'choices' => $canvas_layouts,
+    ) );
+    
+    // Add a setting to save the selected value
+    $wp_customize->add_setting( 'lightenObjects', array(
+        'default'   => '0.5',
+        'transport' => 'refresh',
+    ) );
+    
+    // Add a control to display the select field
+    $wp_customize->add_control( 'lightenObjects', array(
+        'type' => 'range',
+        'input_attrs' => array(
+            'min' => 0,
+            'max' => 1,
+            'step' => 0.1,
+        ),
+        'label'   => 'Lighten objects in background',
+        'section' => 'colors', // You can change this section as per your preference
+    ) );
+    
+    // Add a setting to save the selected value
+    $wp_customize->add_setting( 'lightenContent', array(
+        'default'   => '0.7',
+        'transport' => 'refresh',
+    ) );
+    
+    // Add a control to display the select field
+    $wp_customize->add_control( 'lightenContent', array(
+        'type' => 'range',
+        'input_attrs' => array(
+            'min' => 0,
+            'max' => 1,
+            'step' => 0.05,
+        ),
+        'label'   => 'Lighten content',
+        'section' => 'colors', // You can change this section as per your preference
+    ) );
+    
+    // Add a setting to save the selected value
+    $wp_customize->add_setting( 'amountObjects', array(
+        'default'   => '0.5',
+        'transport' => 'refresh',
+    ) );
+    
+    // Add a control to display the select field
+    $wp_customize->add_control( 'amountObjects', array(
+        'type' => 'range',
+        'input_attrs' => array(
+            'min' => 0.1,
+            'max' => 1,
+            'step' => 0.1,
+        ),
+        'label'   => 'Amount / Size',
+        'section' => 'title_tagline', // You can change this section as per your preference
+    ) );
+    
+    // Add a setting to save the selected value
+    $wp_customize->add_setting( 'svgContent', array(
+        'default'   => "m 34.75,39.75 c 21.333333,7 31.166667,-2 29.5,-27 -1.666667,1 -4.333333,2 -8,3 -18.666667,2 -25.833333,10 -21.5,24 m -9,7 28.5,-21 m -39,31 v 12.5 l 17,-12.5 h 44.5 c 6.666667,0 10,-3.333333 10,-10 v -34 c 0,-6.6666667 -3.333333,-10 -10,-10 h -64 c -6.6666667,0 -10,3.3333333 -10,10 v 34 c 0,6.666667 3.3333333,10 10,10 z",
+        'transport' => 'refresh',
+    ) );
+    
+    // Add a control to display the select field
+    $wp_customize->add_control( 'svgContent', array(
+        'type' => 'textarea',
+        'description' => 'Use this only together with SVG-Templates. Drop an SVG-Path here like "M0 0 L 40 40 L 80 0 Z". See https://www.w3.org/TR/SVG11/paths.html for more informations.',
+        'label'   => 'SVG Content (for experts only)',
+        'section' => 'title_tagline', // You can change this section as per your preference
+    ) );
+    
+    
+    $colors = array(
+        'background_color' => 'Background Color',
+        'object_color' => 'Color of Objects (empty=random)', 
+        'object_secondcolor' => 'Second color (not suitable for all layouts)',
+    );
+    foreach ($colors as $c => $t){
+        $wp_customize->add_setting( $c, //No need to use a SERIALIZED name, as `theme_mod` settings already live under one db record
+            array(
+                'default'    => '', //Default setting/value to save
+                'type'       => 'theme_mod', //Is this an 'option' or a 'theme_mod'?
+                'capability' => 'edit_theme_options', //Optional. Special permissions for accessing this setting.
+                'transport'  => 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
+            )
+            );
+        
+        $wp_customize->add_control( new WP_Customize_Color_Control( //Instantiate the color control class
+            $wp_customize, //Pass the $wp_customize object (required)
+            'susty_'.$c, //Set a unique ID for the control
+            array(
+                'label'      => __( $t, 'susty' ), //Admin-visible name of the control
+                'settings'   => $c, //Which setting to load and manipulate (serialized is okay)
+                'priority'   => 10, //Determines the order this control appears in for the specified section
+                'section'    => 'colors', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+            )
+            ) );
+    }
+}
+
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
