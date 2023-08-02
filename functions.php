@@ -106,10 +106,6 @@ if ( ! function_exists( 'susty_setup' ) ) :
 		) );
 		global $canvas_layouts;
 		$canvas_layout = get_theme_mod( 'canvaslayout_field' );
-		if( in_array($canvas_layout, array_keys($canvas_layouts) ) ) {
-            wp_enqueue_script( 'my-script-'.$canvas_layout, get_template_directory_uri() . '/canvas_layouts/'.$canvas_layout.'.js', array(), true );
-		}
-		wp_enqueue_script( 'my-script', get_template_directory_uri() . '/canvas_layouts/script.js', array(), true );
 	}
 endif;
 add_action( 'after_setup_theme', 'susty_setup' );
