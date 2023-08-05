@@ -1,4 +1,7 @@
 function paintObjects(){
+    context.fillStyle = backgroundColor;
+		    context.fillRect(0,0,canvas.width,canvas.height);
+
 	var amount = 100;
 	const size = Math.ceil( canvas.height/amount ); 
 	const cols = Math.ceil( canvas.width/(size) ) - 1;

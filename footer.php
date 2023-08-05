@@ -38,11 +38,11 @@
 
     var lightenObjects='<?php print get_theme_mod('lightenObjects'); ?>';
     if(! lightenObjects )
-    	lightenObjects=0.5; 
+    	lightenObjects=0.75; 
 
     var lightenContent='<?php print get_theme_mod('lightenContent'); ?>';
     if(! lightenContent )
-    	lightenContent=0.7; 
+    	lightenContent=0.95; 
 
     var backgroundColor='<?php print get_theme_mod('background_color'); ?>';
     if(! backgroundColor )
@@ -56,6 +56,7 @@
 <!-- layout -->
 <?php 
 $layout = get_theme_mod( 'canvaslayout_field' );
+if(empty($layout)) $layout='arcs1';
 echo file_get_contents(get_template_directory()."/canvas_layouts/".$layout.".js");
 ?>
 <!-- script.js -->
