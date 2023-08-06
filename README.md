@@ -3,4 +3,4 @@ This is not a super-lightweight theme, but a semi-super-lightweight theme called
 
 I'm very interested in your opinion on whether javascript and canvas could be an alternative to SVG for creating sustainable websites that still use graphics.
 
-See the wiki for more information.
+See the [wiki](https://github.com/tmanych/susty-canvas/wiki) for more information.

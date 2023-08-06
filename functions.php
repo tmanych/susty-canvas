@@ -36,6 +36,9 @@ $canvas_layouts = array(
     'title4' => 'Title 4',
     'svg1' => 'SVG pattern (for experts)',
     'svg2' => 'SVG random (for experts)',
+    'waves' => 'Waves',
+    'confetti' => 'Confetti',
+    'mosaic' => 'Mosaic',
 );
 ksort($canvas_layouts,2);
 if ( ! function_exists( 'susty_setup' ) ) :
