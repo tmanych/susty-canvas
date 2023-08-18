@@ -14,26 +14,27 @@ $canvas_layouts = array(
     'flowers5' => "Flowers 5",
     'flowers6' => "Flowers 6",
     'radiate' => "Radiate",
-    'lines' => "Lines  (from big to small)",
+    'lines' => "Lines: from big to small",
     'rectangles' => "Chess",
-    'rectangles1' => "Rectangles (from big to small)",
+    'rectangles1' => "Rectangles: from big to small",
     'rectangles2' => "Wide Lines",
     'rectangles3' => "Rectangles big",
-    'arcs1' => "Arcs 1 (from big to small)",
-    'arcs2' => "Arcs 2 (colored left bottom)",
-    'arcs3' => "Arcs 3 (lines left bottom)",
-    'arcs4' => "Arcs 4 (random lines)",
+    'arcs1' => "Arcs 1: from big to small",
+    'arcs2' => "Arcs 2: colored left bottom",
+    'arcs3' => "Arcs 3: lines left bottom",
+    'arcs4' => "Arcs 4: random lines",
+    'arcs5' => "Arcs 5: several arcs",
     'art1' => "Art 1",
-    'art2' => "Art 2",
-    'art3' => "Art 3",
-    'triangle1' => "Triangle 1 (random)",
-    'triangle2' => "Triangle 2",
+    //'art2' => "Art 3",
+    'art3' => "Art 2",
+    'triangle1' => "random Triangles",
+    'triangle2' => "Triangles",
     'arcanimation' => 'Arc-Animation',
-    'titleanimation' => 'Title-Animation',
-    'title1' => 'Title 1',
+    'titleanimation' => 'Title-Animation (not applicable for small border on top)',
+    'title1' => 'Title 1 (fullsize or big area only)',
     'title2' => 'Title 2',
     'title3' => 'Title 3',
-    'title4' => 'Title 4',
+    'title4' => 'Title 4 (not applicable for small border on top)',
     'svg1' => 'SVG pattern (for experts)',
     'svg2' => 'SVG random (for experts)',
     'waves' => 'Waves',
@@ -50,7 +51,8 @@ if ( ! function_exists( 'susty_setup' ) ) :
 	 * as indicating support for post thumbnails.
 	 */
 	function susty_setup() {
-		/*
+	    add_filter('wp_get_custom_css', 'change_custom_css', 10, 2);
+	    /*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
 		 * If you're building a theme based on Susty WP, use a find and replace
@@ -116,6 +118,11 @@ add_action( 'after_setup_theme', 'susty_setup' );
 add_action( 'customize_register', 'mytheme_customize_register' );
 function mytheme_customize_register( $wp_customize ) {
     global $canvas_layouts;
+    $wp_customize->add_section( 'canvas_layout' , array(
+        'title'      => __( 'Canvas Layout Options', 'susty' ),
+        'priority'   => 30,
+    ) );
+    
     // Add a setting to save the selected value
     $wp_customize->add_setting( 'canvaslayout_field', array(
         'default'   => 'arcs1',
@@ -126,9 +133,25 @@ function mytheme_customize_register( $wp_customize ) {
     $wp_customize->add_control( 'canvaslayout_field', array(
         'type'    => 'select',
         'label'   => 'Select Layout',
-        'section' => 'title_tagline', // You can change this section as per your preference
+        'section' => 'canvas_layout', // You can change this section as per your preference
         'choices' => $canvas_layouts,
     ) );
+    
+    // Add a setting to save the selected value
+    $wp_customize->add_setting( 'canvaslayouttype_field', array(
+        'default'   => 'top border',
+        'transport' => 'refresh',
+    ) );
+    
+    // Add a control to display the select field
+    $wp_customize->add_control( 'canvaslayouttype_field', array(
+        'type'    => 'select',
+        'label'   => 'Select Layout Type',
+        'section' => 'canvas_layout', // You can change this section as per your preference
+        'choices' => array("fullsized" => "Full size", "top border" => "Big area in the middle","top small" => "Small Border on top", "top bottom" => "Top and Bottom"),
+        'default' => "top border",
+    ) );
+    
     
     // Add a setting to save the selected value
     $wp_customize->add_setting( 'lightenObjects', array(
@@ -145,7 +168,7 @@ function mytheme_customize_register( $wp_customize ) {
             'step' => 0.1,
         ),
         'label'   => 'Lighten objects in background',
-        'section' => 'colors', // You can change this section as per your preference
+        'section' => 'canvas_layout', // You can change this section as per your preference
     ) );
     
     // Add a setting to save the selected value
@@ -163,7 +186,7 @@ function mytheme_customize_register( $wp_customize ) {
             'step' => 0.05,
         ),
         'label'   => 'Lighten content',
-        'section' => 'colors', // You can change this section as per your preference
+        'section' => 'canvas_layout', // You can change this section as per your preference
     ) );
     
     // Add a setting to save the selected value
@@ -181,23 +204,8 @@ function mytheme_customize_register( $wp_customize ) {
             'step' => 0.1,
         ),
         'label'   => 'Amount / Size',
-        'section' => 'title_tagline', // You can change this section as per your preference
+        'section' => 'canvas_layout', // You can change this section as per your preference
     ) );
-    
-    // Add a setting to save the selected value
-    $wp_customize->add_setting( 'svgContent', array(
-        'default'   => "m 34.75,39.75 c 21.333333,7 31.166667,-2 29.5,-27 -1.666667,1 -4.333333,2 -8,3 -18.666667,2 -25.833333,10 -21.5,24 m -9,7 28.5,-21 m -39,31 v 12.5 l 17,-12.5 h 44.5 c 6.666667,0 10,-3.333333 10,-10 v -34 c 0,-6.6666667 -3.333333,-10 -10,-10 h -64 c -6.6666667,0 -10,3.3333333 -10,10 v 34 c 0,6.666667 3.3333333,10 10,10 z",
-        'transport' => 'refresh',
-    ) );
-    
-    // Add a control to display the select field
-    $wp_customize->add_control( 'svgContent', array(
-        'type' => 'textarea',
-        'description' => 'Use this only together with SVG-Templates. Drop an SVG-Path here like "M0 0 L 40 40 L 80 0 Z". See https://www.w3.org/TR/SVG11/paths.html for more informations.',
-        'label'   => 'SVG Content (for experts only)',
-        'section' => 'title_tagline', // You can change this section as per your preference
-    ) );
-    
     
     $colors = array(
         'background_color' => 'Background Color',
@@ -221,11 +229,42 @@ function mytheme_customize_register( $wp_customize ) {
                 'label'      => __( $t, 'susty' ), //Admin-visible name of the control
                 'settings'   => $c, //Which setting to load and manipulate (serialized is okay)
                 'priority'   => 10, //Determines the order this control appears in for the specified section
-                'section'    => 'colors', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+                'section'    => 'canvas_layout', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
             )
             ) );
     }
+
+    // Add a setting to save the selected value
+    $wp_customize->add_setting( 'svgContent', array(
+        'default'   => "m 34.75,39.75 c 21.333333,7 31.166667,-2 29.5,-27 -1.666667,1 -4.333333,2 -8,3 -18.666667,2 -25.833333,10 -21.5,24 m -9,7 28.5,-21 m -39,31 v 12.5 l 17,-12.5 h 44.5 c 6.666667,0 10,-3.333333 10,-10 v -34 c 0,-6.6666667 -3.333333,-10 -10,-10 h -64 c -6.6666667,0 -10,3.3333333 -10,10 v 34 c 0,6.666667 3.3333333,10 10,10 z",
+        'transport' => 'refresh',
+    ) );
+    
+    // Add a control to display the select field
+    $wp_customize->add_control( 'svgContent', array(
+        'type' => 'textarea',
+        'description' => 'Use this only together with SVG-Templates. Drop an SVG-Path here like "M0 0 L 40 40 L 80 0 Z". See https://www.w3.org/TR/SVG11/paths.html for more informations.',
+        'label'   => 'SVG Content (for experts only)',
+        'section' => 'canvas_layout', // You can change this section as per your preference
+    ) );
+    
+    
 }
+
+function change_custom_css($css, $stylesheet) {
+    //get_theme_mod('object_secondcolor')
+    $css = "
+:root {
+    --background-color: #".get_theme_mod('background_color')."; /* change to your color code for text */
+    --text-color: ".get_theme_mod('object_color')."; /* change to your color code for text */
+    --headline-color: ".get_theme_mod('object_color')."; /* change to your color code for headline */
+}
+        
+" . $css;
+    
+    return $css;
+}
+
 
 
 /**

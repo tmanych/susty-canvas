@@ -21,7 +21,7 @@ function paintObjects(){
 }
 var buchstaben = [];
 function init() {
-	context.font=Math.ceil(amountObjects*hoehe)+"px Arial";
+	context.font=Math.ceil(amountObjects*hoehe)+"px serif";
     var text = bodyElement.getElementsByTagName("h1")[0].innerText
 	for( var i = 0; i < text.length ; i++) {
 		if(text[i]!==" ") {

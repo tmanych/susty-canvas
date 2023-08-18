@@ -7,7 +7,7 @@ function paintObjects(){
 	for (var c = 0; c < objects.length; c++) {
 		objects[c].draw();
 	}
-	context.font=schriftgroesse+"px Arial";
+	context.font=schriftgroesse+"px serif";
 	context.globalCompositeOperation='xor';//xor //lighter
 	context.fillStyle = colorSecondObjects;
 	context.fillText(text, 0, canvas.height);
@@ -23,10 +23,10 @@ function init() {
 	}
 	text = bodyElement.getElementsByTagName("h1")[0].innerText;
 	schriftgroesse = canvas.height;
-	context.font=schriftgroesse+"px Arial";
+	context.font=schriftgroesse+"px serif";
 	while(context.measureText(text).width > canvas.width) {
 		schriftgroesse -= 5;
-		context.font=schriftgroesse+"px Arial";
+		context.font=schriftgroesse+"px serif";
 	}
 	initialized = true;
 }

@@ -13,10 +13,10 @@ function paintObjects(){
 	}
     var text = bodyElement.getElementsByTagName("h1")[0].innerText
 	var schriftgroesse = canvas.height;
-	context.font=schriftgroesse+"px Arial";
+	context.font=schriftgroesse+"px serif";
 	while(context.measureText(text).width > canvas.width) {
 		schriftgroesse -= 5;
-		context.font=schriftgroesse+"px Arial";
+		context.font=schriftgroesse+"px serif";
 	}
 	context.fillStyle = randomRGB();
 	context.globalCompositeOperation='xor';//xor //lighter

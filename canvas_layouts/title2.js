@@ -1,16 +1,16 @@
 function paintObjects(){
     var text = bodyElement.getElementsByTagName("h1")[0].innerText
 	var schriftgroesse = 600;
-	context.font=schriftgroesse+"px Arial";
+	context.font=schriftgroesse+"px serif";
 	while(context.measureText(text).width > canvas.width) {
 		schriftgroesse *= 0.9;
-		context.font=schriftgroesse+"px Arial";
+		context.font=schriftgroesse+"px serif";
 	}
 	var anzahl = 1;
 	var schriftgroesse_klein = schriftgroesse;
 	while(context.measureText(text).width > (canvas.width/10)) {
 		schriftgroesse_klein *= 0.9;
-		context.font=schriftgroesse_klein+"px Arial";
+		context.font=schriftgroesse_klein+"px serif";
 		anzahl++;
 	}
 	schriftgroesse = Math.ceil(schriftgroesse);
@@ -20,7 +20,7 @@ function paintObjects(){
 	var y = canvas.height;
 	for(var i = anzahl; i > 0; i--) {
 		context.fillStyle = randomRGB();
-		context.font=schriftgroesse+"px Arial";
+		context.font=schriftgroesse+"px serif";
 		schriftgroesse *= verkl;
 		schriftgroesse = Math.ceil(schriftgroesse);
 	    if(colorSecondObjects && i%2===0) context.fillStyle = colorSecondObjects;

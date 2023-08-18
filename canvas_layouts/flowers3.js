@@ -9,7 +9,7 @@ function paintObjects(){
 	    var radius = 20+Math.random()*30;
 		for(var i = 0; i < innen; i++)  {
 		    context.fillStyle = randomRGB();
-			if(i%2===0) context.fillStyle = colorSecondObjects;
+			if(i%2===1) context.fillStyle = colorSecondObjects;
 			for(var j = 0; j < blaetter; j++)  {
 				for (var winkel = 0; winkel < 360; winkel+=Math.floor(360/blaetter)) {
 				    //Punkt am Aussenkreis berechnen fuer Winkel

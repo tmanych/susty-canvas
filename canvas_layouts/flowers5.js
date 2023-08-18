@@ -7,6 +7,7 @@ function paintObjects(){
 	    var farbe = randomRGB();
 	    var xStart = canvas.width*Math.random();
 	    var yStart = canvas.height*Math.random();
+		    context.lineWidth=0.5;
 	    for(var i = 0; i < anzahl; i++)  {
 	        var hoehe = 0.4;
 	        var x1 = Math.cos(360/anzahl * i * Math.PI/180) * 15 + xStart;
@@ -26,13 +27,12 @@ function paintObjects(){
 	        context.stroke();
 	        context.fill();
 	    
-	        context.beginPath();
-	        context.arc(xStart,yStart,radius*0.2,0,2*Math.PI);
-	        context.strokeStyle="black";
-	        if(colorSecondObjects) context.fillStyle=colorSecondObjects;
-			context.lineWidth=1;
-	        context.fill();
-	        context.stroke();
 	    }
+        context.beginPath();
+        context.arc(xStart,yStart,radius*0.1,0,2*Math.PI);
+        context.strokeStyle="black";
+        if(colorSecondObjects) context.fillStyle=colorSecondObjects;
+        context.fill();
+        context.stroke();
 	}
 }

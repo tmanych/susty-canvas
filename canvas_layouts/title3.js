@@ -1,7 +1,7 @@
 function paintObjects(){
     var text = bodyElement.getElementsByTagName("h1")[0].innerText
 	var schriftgroesse = 40;
-	context.font=schriftgroesse+"px Arial";
+	context.font=schriftgroesse+"px serif";
 	var w = 0;
 	var h = 0;
 	var goOn = true;

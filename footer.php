@@ -38,7 +38,7 @@
 
     var lightenObjects='<?php print get_theme_mod('lightenObjects'); ?>';
     if(! lightenObjects )
-    	lightenObjects=0.75; 
+    	lightenObjects=0.5; 
 
     var lightenContent='<?php print get_theme_mod('lightenContent'); ?>';
     if(! lightenContent )
@@ -46,12 +46,17 @@
 
     var backgroundColor='<?php print get_theme_mod('background_color'); ?>';
     if(! backgroundColor )
-    	backgroundColor='#ffffff'; 
+    	backgroundColor='ffffff'; 
 
     var svgContent="M0 0 L 40 40 L 80 0 Z"; 
     var layout = '<?php echo get_theme_mod( 'canvaslayout_field' )?>'; 
 	if(layout.startsWith('svg')){
     	svgContent='<?php print get_theme_mod('svgContent'); ?>';
+    }
+
+    var canvaslayouttype_field = '<?php echo get_theme_mod( 'canvaslayouttype_field' )?>'; 
+	if(! canvaslayouttype_field ){
+    	canvaslayouttype_field ='top border';
     }
 <!-- layout -->
 <?php 
